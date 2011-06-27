@@ -12,7 +12,7 @@ function Eventbrite() {
     this.eventbrite_api_endpoint = "https://developer.eventbrite.com/json/";
 
   // private accessor
-  authParams = function(params){
+  authParams = function (params) {
     params.app_key = api_key;
     params.user_key = user_key;
     return params;
@@ -28,17 +28,16 @@ function Eventbrite() {
 }
 
 Eventbrite.prototype = {
-  request: function( method, params, cb)
-  {
+  request: function ( method, params, cb) {
     $.ajax({
       url: this.eventbrite_api_endpoint + method,
       data: authParams(params),
       type: 'GET',
       dataType: 'jsonp',
-      success: function(resp){
+      success: function (resp) {
         cb(resp.contents);
       },
-      failure: function(err){
+      failure: function (err) {
         console.log("Error connecting to Eventbrite API");
       }
     });
