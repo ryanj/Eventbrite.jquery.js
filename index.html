@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+  <h1>Eventbrite.jquery.js Test Examples</h1>
+  
+  <p id='target'>&nbsp;</p>
+  
+  <img src="http://developer.eventbrite.com/wp-content/uploads/2010/10/powered_by.jpg"/>
+
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+<script type="text/javascript" src="Eventbrite.jquery.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+    //Eventbrite users can request an API key on the following page:
+    // http://www.eventbrite.com/api/key/
+    // Add your API key below:
+    api_key = 'REQUIRED'; 
+    // Each user can find their user_key on this page: 
+    //  http://www.eventbrite.com/userkeyapi
+    user_key = ''; // Define a user_key to access private data
+
+    Eventbrite(api_key, user_key, function(evb_client){
+
+      params = {'city': "San Francisco", 'region':'CA'};
+      evb_client.request("event_search", params, function(response){
+        console.log(response);
+
+        $.each(response.events, function(i,evb_event){
+          if( evb_event['event']){
+            $('#target').append('<p><a href="' + evb_event['event'].url + '">' + evb_event['event'].title + '</a></p>');
+          }
+        });
+
+      });
+    });
+  });
+</script>
