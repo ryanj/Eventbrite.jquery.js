@@ -6,7 +6,19 @@ written by @ryanjarvinen
 - <a href="http://developer.eventbrite.com/terms/">Eventbrite API terms and usage limitations</a>
 - <a href="http://developer.eventbrite.com/news/branding/">branding guidelines</a>
 
-# Example
+
+
+
+# Usage Example
+
+Eventbrite users can request an API key on the following page:
+    http://www.eventbrite.com/api/key/ (required)
+
+Each user can find their user_key on this page: 
+    http://www.eventbrite.com/userkeyapi (only needed to update/access private data)
+
+##  WARNING: A user_key provides priveledged access to all of a user's private data.  Keep it secret.  Keep it safe.
+Eventbrite does not recommend storing authentication tokens in client side source.
 
           // Eventbrite Client interaction example
           Eventbrite('api_key', 'user_key', function(eb_client){
