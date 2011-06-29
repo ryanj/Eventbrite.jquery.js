@@ -1,4 +1,4 @@
-# An Eventbrite API clinet library. (requires jQuery)
+# An Eventbrite API client library. (requires jQuery)
 --------------------------------------
 written by @ryanjarvinen
 
