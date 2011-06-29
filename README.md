@@ -12,13 +12,13 @@ written by @ryanjarvinen
 # Usage Example
 
 Eventbrite users can request an API key on the following page:
-    http://www.eventbrite.com/api/key/ (required)
+    http://www.eventbrite.com/api/key/ (REQUIRED)
 
 Each user can find their user_key on this page: 
-    http://www.eventbrite.com/userkeyapi (only needed to update/access private data)
+    http://www.eventbrite.com/userkeyapi (OPTIONAL, only needed to update/access private data)
 
-##  WARNING: A user_key provides priveledged access to all of a user's private data.  Keep it secret.  Keep it safe.
-Eventbrite does not recommend storing authentication tokens in client side source.
+####  WARNING: A user_key provides priveledged access to all of a user's private data.  Keep it secret.  Keep it safe.
+Eventbrite does not recommend storing authentication tokens in client side source.  See the included [index.html](https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/index.html) file for a more detailed implementation example.
 
           // Eventbrite Client interaction example
           Eventbrite('api_key', 'user_key', function(eb_client){
