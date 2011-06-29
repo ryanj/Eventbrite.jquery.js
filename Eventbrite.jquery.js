@@ -9,12 +9,15 @@ function Eventbrite() {
     callback = args.pop(),
     api_key = args[0],
     user_key = args[1];
-    this.eventbrite_api_endpoint = "https://developer.eventbrite.com/json/";
 
   // private accessor
   authParams = function (params) {
     params.app_key = api_key;
-    params.user_key = user_key;
+    if ( user_key != '' && user_key != undefined ) {
+      params.user_key = user_key;
+    } else {
+      params.user_key = '';
+    }
     return params;
   };
 
@@ -28,9 +31,10 @@ function Eventbrite() {
 }
 
 Eventbrite.prototype = {
+  api_host: "https://developer.eventbrite.com/json/",
   request: function ( method, params, cb) {
     $.ajax({
-      url: this.eventbrite_api_endpoint + method,
+      url: this.api_host + method,
       data: authParams(params),
       type: 'GET',
       dataType: 'jsonp',
