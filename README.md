@@ -5,10 +5,6 @@ written by @ryanjarvinen
 # Usage Example #
 
 
-
-####  WARNING: user_keys provide privileged access to a user's private data.  Keep it secret.  Keep it safe.
-Eventbrite does not recommend storing authentication tokens in client side source.  See the included [index.html](https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/index.html) file for a more detailed implementation example.
-
 First, initialize the Eventbrite API client:
 
 - `api_key`: (REQUIRED) Eventbrite users can request an API key on the following page: http://www.eventbrite.com/api/key/
@@ -26,6 +22,9 @@ Within the callback, you can interact with the API:
     eb_client.event_search( params, function(response){
         console.log(response);
     });
+
+####  WARNING: user_keys provide privileged access to a user's private data.  Keep it secret.  Keep it safe.
+Eventbrite does not recommend storing authentication tokens in client side source.  See the included [index.html](https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/index.html) file for a more detailed implementation example.
 
 # Resources #
 
