@@ -50,19 +50,21 @@
           // Eventbrite Client interaction example
           Eventbrite($('#api_key').val(), $('#user_key').val(), function(eb_client){
             // parameters to pass to the API
-            search_params = {'city': "San Francisco", 'region':'CA'};
+            var search_params = {'city': "San Francisco", 'region':'CA'};
             // make a client request, provide a callback that will handle the response data
-            eb_client.request("event_search", search_params, function(response){
+            eb_client.event_search( search_params, function(response){
 
               console.log(response);
               // Use jQuery to display the response data to the user
               $('#target').html('');      
-              $.each(response.events, function(i,eb_event){
-                if( eb_event['event']){
-                  $('#target').append('<p><a href="' + eb_event['event'].url + '">' + eb_event['event'].title + '</a></p>');
-                }
-              });
-      
+              if( response.events && response.events.length )
+              {
+                $.each(response.events, function(i,eb_event){
+                  if( eb_event['event']){
+                    $('#target').append('<p><a href="' + eb_event['event'].url + '">' + eb_event['event'].title + '</a></p>');
+                  }
+                });
+              }
             });
           });
           // Close the dialog after we collect the required authentication tokens
