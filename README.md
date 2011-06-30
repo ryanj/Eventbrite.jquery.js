@@ -8,43 +8,27 @@ written by @ryanjarvinen
 - <a href="http://developer.eventbrite.com/terms/">Eventbrite API terms and usage limitations</a>
 - <a href="http://developer.eventbrite.com/news/branding/">branding guidelines</a>
 
-
-
-
 # Usage Example
 
-Eventbrite users can request an API key on the following page:
-    http://www.eventbrite.com/api/key/ (REQUIRED)
+Eventbrite users can request an API key on the following page (REQUIRED): http://www.eventbrite.com/api/key/ 
 
-Each user can find their user_key on this page: 
-    http://www.eventbrite.com/userkeyapi (OPTIONAL, only needed to update/access private data)
+Each user can find their user_key on this page (OPTIONAL, only needed to update/access private data): http://www.eventbrite.com/userkeyapi 
 
 ####  WARNING: user_keys provide privileged access to a user's private data.  Keep it secret.  Keep it safe.
 Eventbrite does not recommend storing authentication tokens in client side source.  See the included [index.html](https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/index.html) file for a more detailed implementation example.
 
-          // Eventbrite Client interaction example
-          //  This function accepts the following arguments: 
-          //    api_key: http://www.eventbrite.com/api/key/
-          //    user_key or '': providing an empty string will limit access to public data only
-          //    callback: for interacting with the API
-          Eventbrite('api_key', 'user_key', function(eb_client){
-            // parameters to pass to the API
-            search_params = {'city': "San Francisco", 'region':'CA'};
-            // make a client request, provide a callback that will handle the response data
-            //  This function accepts the following args:
-            //    api_method: see the API docs for available request methods
-            //    request_params: a map of request parameters
-            //    callback: a function to process the response data
-            eb_client.request("event_search", search_params, function(response){
+First, initialize the API client:
+- `api_key`: http://www.eventbrite.com/api/key/
+- `user_key`: omitting this parameter will limit access to public data only
+- `callback`: for interacting with the API
 
-              console.log(response);
-              // Use jQuery to display the response data to the user
-              $.each(response.events, function(i,eb_event){
-                if( eb_event['event']){
-                  $('#target').append('<p><a href="' + eb_event['event'].url + '">' + eb_event['event'].title + '</a></p>');
-                }
-              });
-      
-            });
-          });
+    Eventbrite('api_key', 'user_key', function(eb_client){ ... });
 
+Within the callback, you can interact with the API:
+
+    // parameters to pass to the API
+    var params = {'city': "San Francisco", 'region':'CA'};
+    // make a client request, provide another callback to handle the response data
+    eb_client.event_search( params, function(response){
+        console.log(response);
+    });
