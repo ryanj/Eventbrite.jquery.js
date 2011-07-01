@@ -6,6 +6,7 @@ written by @ryanjarvinen
 
 
 The following parameters can be used to initialize the Eventbrite API client:
+
 * `api_key`: (REQUIRED) Eventbrite users can request an API key on the following page: http://www.eventbrite.com/api/key/
 * `user_key`: (OPTIONAL) Omitting this parameter will limit access to public data.  Providing a user_key is only needed when updating/accessing private information.  Each user can find their `user_key` on this page: http://www.eventbrite.com/userkeyapi 
 * `callback`: for interacting with the API
