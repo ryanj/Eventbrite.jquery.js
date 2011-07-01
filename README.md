@@ -7,14 +7,14 @@ written by @ryanjarvinen
 
 First, initialize the Eventbrite API client:
 
-- `api_key`: (REQUIRED) Eventbrite users can request an API key on the following page: http://www.eventbrite.com/api/key/
-- `user_key`: (OPTIONAL) Omitting this parameter will limit access to public data.  Providing a user_key is only needed when updating/accessing private information.  Each user can find their `user_key` on this page: http://www.eventbrite.com/userkeyapi 
-- `callback`: for interacting with the API
+* `api_key`: (REQUIRED) Eventbrite users can request an API key on the following page: http://www.eventbrite.com/api/key/
+* `user_key`: (OPTIONAL) Omitting this parameter will limit access to public data.  Providing a user_key is only needed when updating/accessing private information.  Each user can find their `user_key` on this page: http://www.eventbrite.com/userkeyapi 
+* `callback`: for interacting with the API
 
 
-    Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
+        Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
 
-Within the callback, you can interact with the API:
+Within the callback, you can use the client to call any of the methods described in the [Eventbrite API Docs](http://developer.eventbrite.com/doc/):
 
     // parameters to pass to the API
     var params = {'city': "San Francisco", 'region':'CA'};
@@ -28,9 +28,9 @@ Eventbrite does not recommend storing authentication tokens in client side sourc
 
 # Resources #
 
-- <a href="http://creativecommons.org/licenses/by/3.0/">license info</a>
-- <a href="http://developer.eventbrite.com/doc/">API Documentation</a>
-- <a href="http://developer.eventbrite.com/doc/getting-started/">API Getting-Started Guide</a>
-- <a href="http://developer.eventbrite.com/terms/">Eventbrite API terms and usage limitations</a>
-- <a href="http://developer.eventbrite.com/news/branding/">branding guidelines</a>
+* <a href="http://creativecommons.org/licenses/by/3.0/">License Info</a>
+* <a href="http://developer.eventbrite.com/doc/">API Documentation</a>
+* <a href="http://developer.eventbrite.com/doc/getting-started/">API Getting-Started Guide</a>
+* <a href="http://developer.eventbrite.com/terms/">Eventbrite API terms and usage limitations</a>
+* <a href="http://developer.eventbrite.com/news/branding/">Eventbrite Branding Guidelines</a>
 
