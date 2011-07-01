@@ -5,14 +5,14 @@ written by @ryanjarvinen
 # Usage Example #
 
 
-First, initialize the Eventbrite API client:
-
+The following parameters can be used to initialize the Eventbrite API client:
 * `api_key`: (REQUIRED) Eventbrite users can request an API key on the following page: http://www.eventbrite.com/api/key/
 * `user_key`: (OPTIONAL) Omitting this parameter will limit access to public data.  Providing a user_key is only needed when updating/accessing private information.  Each user can find their `user_key` on this page: http://www.eventbrite.com/userkeyapi 
 * `callback`: for interacting with the API
 
+First, let's try initializing the client:
 
-     Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
+    Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
 
 Within the callback, the client can be used to call any of the methods described in the [Eventbrite API Docs](http://developer.eventbrite.com/doc/):
 
