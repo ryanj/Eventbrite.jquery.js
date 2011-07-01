@@ -12,9 +12,9 @@ First, initialize the Eventbrite API client:
 * `callback`: for interacting with the API
 
 
-        Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
+    Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
 
-Within the callback, you can use the client to call any of the methods described in the [Eventbrite API Docs](http://developer.eventbrite.com/doc/):
+Within the callback, the client can be used to call any of the methods described in the [Eventbrite API Docs](http://developer.eventbrite.com/doc/):
 
     // parameters to pass to the API
     var params = {'city': "San Francisco", 'region':'CA'};
