@@ -61,7 +61,8 @@
               {
                 $.each(response.events, function(i,eb_event){
                   if( eb_event['event']){
-                    $('#target').append('<p><a href="' + eb_event['event'].url + '">' + eb_event['event'].title + '</a></p>');
+                    var event_html = '<p><a style="font-size:32px;" href="' + eb_event['event'].url + '"><img style="float:right;" src="' + ( eb_event['event'].logo || 'http://developer.eventbrite.com/wp-content/uploads/2010/10/powered_by.jpg' ) + '"/>' + eb_event['event'].title + '</a>' + eb_client.widget.ticket( eb_event['event'] ) + '</p><hr/>';
+                    $('#target').append( event_html );
                   }
                 });
               }

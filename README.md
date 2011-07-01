@@ -2,7 +2,7 @@
 --------------------------------------
 written by @ryanjarvinen
 
-# Usage Example #
+# Usage Examples #
 
 
 The following parameters can be used to initialize the Eventbrite API client:
@@ -11,21 +11,49 @@ The following parameters can be used to initialize the Eventbrite API client:
 * `user_key`: (OPTIONAL) Omitting this parameter will limit access to public data.  Providing a user_key is only needed when updating/accessing private information.  Each user can find their `user_key` on this page: http://www.eventbrite.com/userkeyapi 
 * `callback`: for interacting with the API
 
-First, let's try initializing the client:
+### initialize the client
 
     Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
 
 Within the callback, the client can be used to call any of the methods described in the [Eventbrite API Docs](http://developer.eventbrite.com/doc/):
 
+### [ event_search ]( http://developer.eventbrite.com/doc/events/event_search/ )
+
     // parameters to pass to the API
     var params = {'city': "San Francisco", 'region':'CA'};
     // make a client request, provide another callback to handle the response data
-    eb_client.event_search( params, function(response){
+    eb_client.event_search( params, function( response ){
+        console.log( response );
+    });
+
+### [ event_get ]( http://developer.eventbrite.com/doc/events/event_get/ )
+
+    eb_client.event_get( {'id': 123456789 }, function( response ){
+        // render the event as a ticket widget:
+        var ticket_widget_html = eb_client.widget.ticket( response.event ); 
+
+        // or, render it as a countdown widget:
+        var countdown_widget_html = eb_client.widget.countdown( response.event ); 
+
+        console.log( countdown_widget_html + ticket_widget_html );
+    });
+
+### [ event_list_attendees ]( http://developer.eventbrite.com/doc/events/event_list_attendees/ )
+
+    eb_client.event_list_attendees ( {'id': 123456789 }, function( response ){
         console.log(response);
     });
 
+### [user_list_events]( http://developer.eventbrite.com/doc/users/user_list_events/ )
+
+    eb_client.user_list_events ( {}, function( response ){
+        console.log( response );
+    });
+
 ####  WARNING: user_keys provide privileged access to a user's private data.  Keep it secret.  Keep it safe.
-Eventbrite does not recommend storing authentication tokens in client side source.  See the included [index.html](https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/index.html) file for a more detailed implementation example.
+*__Eventbrite does not recommend storing authentication tokens in client side source.__*
+
+See the included [index.html](https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/index.html) file for a more detailed implementation example.
 
 # Resources #
 
