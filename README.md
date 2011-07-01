@@ -12,7 +12,7 @@ First, initialize the Eventbrite API client:
 - `callback`: for interacting with the API
 
 
-    Eventbrite('api_key', 'user_key', function(eb_client){ ... });
+    Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
 
 Within the callback, you can interact with the API:
 
