@@ -48,7 +48,7 @@
         'Authenticate': function() {
 
           // Eventbrite Client interaction example
-          Eventbrite($('#api_key').val(), $('#user_key').val(), function(eb_client){
+          Eventbrite({'app_key':$('#api_key').val(), 'user_key':$('#user_key').val()}, function(eb_client){
             // parameters to pass to the API
             var search_params = {'city': "San Francisco", 'region':'CA'};
             // make a client request, provide a callback that will handle the response data

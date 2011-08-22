@@ -7,12 +7,24 @@ var Eventbrite = function () {
   var args = Array.prototype.slice.call(arguments),
     // the last argument is the callback
     callback = args.pop();
-  this.api_key = args[0];
-  this.user_key = args[1];
+  this.auth_tokens = {};
+  if(typeof args[0] === 'object'){
+    this.auth_tokens = args[0];
+  }else{
+    this.auth_tokens.app_key = args[0];
+    if(typeof args[1] !== 'function'){
+      if(typeof args[2] !== 'function'){
+       this.auth_tokens.user = args[1];
+       this.auth_tokens.password = args[1];
+      }else{
+       this.auth_tokens.user_key = args[1];
+      }
+    }
+  }
 
   // make sure the function is called as a constructor
   if (!(this instanceof Eventbrite)) {
-    return new Eventbrite(api_key, user_key, callback);
+    return new Eventbrite(auth_tokens, callback);
   }
   
   // call callback
@@ -23,9 +35,15 @@ Eventbrite.prototype = {
   'api_host': "https://developer.eventbrite.com/json/",
   'api_methods': ['discount_new', 'discount_update', 'event_copy', 'event_get', 'event_list_attendees', 'event_list_discounts', 'event_new', 'event_search', 'event_update', 'organizer_list_events', 'organizer_new', 'organizer_update', 'organizer_get', 'payment_update', 'ticket_new', 'ticket_update', 'user_get', 'user_list_events', 'user_list_organizers', 'user_list_tickets', 'user_list_venues', 'user_new', 'user_update', 'venue_new', 'venue_get', 'venue_update'],
   'request': function ( method, params, cb ) {
-    params.app_key = this.api_key;
-    if (!( this.user_key === undefined || "function" === typeof this.user_key )) {
-      params.user_key = this.user_key;
+    var auth_headers = {};
+    if( this.auth_tokens['access_token'] === undefined ){
+        if(this.auth_tokens.app_key){ params.app_key = this.auth_tokens.app_key;}
+        if(this.auth_tokens.user_key){ params.user_key = this.auth_tokens.user_key;}
+        if(this.auth_tokens.user){ params.user = this.auth_tokens.user;}
+        if(this.auth_tokens.password){ params.password = this.auth_tokens.password;}
+    }else{
+        auth_headers = {'Authorization': 'Bearer ' + this.auth_tokens['access_token']};
+        params.access_token = this.auth_tokens.access_token;
     }
     
     $.ajax({
@@ -33,6 +51,14 @@ Eventbrite.prototype = {
       data: params,
       type: 'GET',
       dataType: 'jsonp',
+      headers: auth_headers,
+      beforeSend: function(xhrObj){
+        xhrObj.setRequestHeader("Content-Type","application/json");
+        xhrObj.setRequestHeader("Accept","application/json");
+        if(params.access_token !== undefined){
+          xhrObj.setRequestHeader("Authorization","Bearer "+params.access_token);
+        }
+      },
       success: function (resp) {
         cb(resp.contents);
       },

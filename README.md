@@ -13,7 +13,7 @@ The following parameters can be used to initialize the Eventbrite API client:
 
 ### Initialize the client:
 
-    Eventbrite('api_key', 'user_key', function(eb_client){ //eb_client interaction goes here... });
+    Eventbrite({'api_key': "YOUR_API_KEY", 'user_key':"YOUR_USER_KEY"}, function(eb_client){ //eb_client interaction goes here... });
 
 Within the callback, the client can be used to call any of the methods described in the [Eventbrite API Docs](http://developer.eventbrite.com/doc/):
 
