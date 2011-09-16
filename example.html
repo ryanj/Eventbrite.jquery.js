@@ -10,6 +10,8 @@
 </head>
 <body>
   <h1>Eventbrite.jquery.js Test Examples</h1>
+  <p><a id="menu" href="#">menu</a></p>
+
   
   <p id='target'>&nbsp;</p>
   
@@ -37,7 +39,8 @@
     // http://www.eventbrite.com/userkeyapi (only needed to update/access private data)
     ////
     ////  WARNING: A user_key provides priveledged access to all of a user's private data.  Keep it secret.  Keep it safe.
-    ////           Eventbrite does not recommend storing user_keys in client side source.
+    ////           Eventbrite does not recommend storing user_keys in client side source code.  localStorage might be safer
+    $('#menu').bind('click', function(){ $( "#dialog-form" ).dialog("open"); });
     
     $( "#dialog-form" ).dialog({
       'autoOpen': true,
@@ -50,22 +53,13 @@
           // Eventbrite Client interaction example
           Eventbrite({'app_key':$('#api_key').val(), 'user_key':$('#user_key').val()}, function(eb_client){
             // parameters to pass to the API
-            var search_params = {'city': "San Francisco", 'region':'CA'};
+            var params = {'city': "San Francisco" };
             // make a client request, provide a callback that will handle the response data
-            eb_client.event_search( search_params, function(response){
+            eb_client.event_search( params, function(response){
 
               console.log(response);
               // Use jQuery to display the response data to the user
-              $('#target').html('');      
-              if( response.events && response.events.length )
-              {
-                $.each(response.events, function(i,eb_event){
-                  if( eb_event['event']){
-                    var event_html = '<p><a style="font-size:32px;" href="' + eb_event['event'].url + '"><img style="float:right;" src="' + ( eb_event['event'].logo || 'http://developer.eventbrite.com/wp-content/uploads/2010/10/powered_by.jpg' ) + '"/>' + eb_event['event'].title + '</a>' + eb_client.widget.ticket( eb_event['event'] ) + '</p><hr/>';
-                    $('#target').append( event_html );
-                  }
-                });
-              }
+              $('#target').html( eb_client.utils.eventList( response, eb_client.utils.eventListRow ));
             });
           });
           // Close the dialog after we collect the required authentication tokens
@@ -76,3 +70,29 @@
     });
   });
 </script>
+
+<style type="text/css">
+.eb_event_list_item{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.eb_event_list_title{
+  display:block;
+  padding-left: 20px;
+  width: 400px;
+  overflow: hidden;
+  font-size: larger;
+}
+.eb_event_list_date{
+  position: absolute;
+  left: 30px;
+}
+.eb_event_list_time{
+  position: absolute;
+  left: 155px;
+}
+.eb_event_list_location{
+  position: absolute;
+  left: 230px;
+}
+</style>
