@@ -47,13 +47,13 @@ Within the callback, the client can be used to call any of the methods described
 ### [user_list_events]( http://developer.eventbrite.com/doc/users/user_list_events/ )
 
     eb_client.user_list_events ( {}, function( response ){
-        console.log( response );
+        $( '#target' ).html( eb_client.utils.eventList( response, eb_client.utils.eventListRow ));
     });
 
 ####  WARNING: user_keys provide privileged access to a user's private data.  Keep it secret.  Keep it safe.
 *__Eventbrite does not recommend storing authentication tokens in client side source.__*
 
-See the included [index.html](https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/index.html) file for a more detailed implementation example.
+See the included [example.html](https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/example.html) file for a more detailed implementation example.
 
 # Resources #
 
