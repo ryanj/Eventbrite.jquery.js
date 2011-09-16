@@ -76,7 +76,9 @@ Eventbrite.prototype = {
       if( evnts['events'] !== undefined ){
         var len = evnts['events'].length;
         for( var i = 0; i < len; i++ ){
-          html.push( callback( evnts['events'][i]['event'], options ));
+          if(evnts['events'][i]['event'] !== undefined ){
+            html.push( callback( evnts['events'][i]['event'], options ));
+          }
         }
       }else{
         html.push('No events are available at this time.');
