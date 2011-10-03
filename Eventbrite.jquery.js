@@ -87,7 +87,9 @@ Eventbrite.prototype = {
       return html.join('\n');
     },
     'eventListRow': function( evnt ){
-      var start_date = new Date( Date.parse( evnt['start_date'] ));
+      var not_iso_8601 = /\d\d-\d\d-\d\d \d\d:\d\d:\d\d/;
+      var date_string = not_iso_8601.test( evnt['start_date'] ) ? evnt['start_date'].replace(' ', 'T') : evnt['start_date'];
+      var start_date = new Date( Date.parse( date_string ));
       var venue_name = 'Online'; //default location name
       var time_string = Eventbrite.prototype.utils.formatTime( start_date );
       var date_string = start_date.toDateString();
