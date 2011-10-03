@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="shortcut icon" href="http://evbdn.eventbrite.com/s3-production/35362ce/django/images/icons/favicon.ico" /> 
+  <link rel='stylesheet' href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.6.1.js"></script> 
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="https://raw.github.com/ryanjarvinen/Eventbrite.jquery.js/master/Eventbrite.jquery.js"></script>
+  <title>Eventbrite.jquery.js Test Examples</title>
+</head>
+<body>
+  <h1>Eventbrite.jquery.js Test Examples</h1>
+  <p><a id="menu" href="#">menu</a></p>
+  
+  <p id='target'>&nbsp;</p>
+  
+  <a href="http://developer.eventbrite.com/news/branding/"><img src="http://evbdn.eventbrite.com/s3-s3/static/images/django/logos/eb_powered.png"/></a>
+
+  <div style="display:none;" id="dialog-form" title="API Credentials"> 
+    <p class="validateTips">Please enter your Eventbrite API authentication keys:</p> 
+ 
+    <form> 
+      <label for="api_key"><a href="http://www.eventbrite.com/api/key/">api_key</a> (REQUIRED)</label> 
+      <input type="text" name="api_key" id="api_key" class="text ui-widget-content ui-corner-all" /> 
+      <br/>
+      <label for="user_key"><a href="http://www.eventbrite.com/myprofile/">organizer_id</a> (REQUIRED)</label> 
+      <input type="text" name="oganizer_id" id="organizer_id" value="" class="text ui-widget-content ui-corner-all" /> 
+    </form> 
+  </div> 
+
+</body>
+<script type="text/javascript">
+  $('document').ready(function(){
+    //Eventbrite users can request an API key on the following page:
+    // http://www.eventbrite.com/api/key/ (required)
+    //Each user can find their user_key on this page: 
+    // http://www.eventbrite.com/userkeyapi (only needed to update/access private data)
+    ////
+    ////  WARNING: A user_key provides priveledged access to all of a user's private data.  Keep it secret.  Keep it safe.
+    ////           Eventbrite does not recommend storing user_keys in client side source code.  localStorage might be safer
+    $('#menu').bind('click', function(){ $( "#dialog-form" ).dialog("open"); });
+    
+    $( "#dialog-form" ).dialog({
+      'autoOpen': true,
+      'height': 350,
+      'width': 400,
+      'modal': true,
+      'buttons': {
+        'Authenticate': function() {
+
+
+         
+          //---------------------------------------------------------------------------------------------//
+
+          // Eventbrite Client interaction example
+          Eventbrite({'app_key':$('#api_key').val()}, function(eb_client){
+            // parameters to pass to the API
+            // See http://developer.eventbrite.com/doc/organizers/organizer_list_events/ for more info about this API call
+            var params = {'id': $('#organizer_id').val() };
+            // make a client request, provide a callback that will handle the response data
+            eb_client.organizer_list_events( params, function(response){
+
+              // Use jQuery to display the response data to the user
+              // If you don't like the output, you can supply another function that will convert
+              //  each event, into HTML..
+              $('#target').html( eb_client.utils.eventList( response, eb_client.utils.eventListRow ));
+
+            });
+          });
+          
+          //---------------------------------------------------------------------------------------------//
+
+
+
+
+
+          // Close the dialog after we collect the required authentication tokens
+          $( this ).dialog( "close" );
+        },
+        'Cancel': function() { $( this ).dialog( "close" ); }
+      }
+    });
+  });
+</script>
+
+<style type="text/css">
+.eb_event_list_item{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.eb_event_list_title{
+  display:block;
+  padding-left: 20px;
+  width: 400px;
+  overflow: hidden;
+  font-size: larger;
+}
+.eb_event_list_date{
+  position: absolute;
+  left: 30px;
+}
+.eb_event_list_time{
+  position: absolute;
+  left: 175px;
+}
+.eb_event_list_location{
+  position: absolute;
+  left: 250px;
+}
+</style>
