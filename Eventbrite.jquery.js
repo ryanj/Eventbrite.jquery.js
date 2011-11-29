@@ -280,11 +280,11 @@ Eventbrite.prototype = {
     },
     'loginHTML': function( strings ) {
       // Replace this example with something that works with your Application's templating engine
-      html = ["<div class='eb_login_widget'> <h2>Eventbrite Account Access</h2>"];
+      html = ["<div class='eb_login_widget'>"];
       if( strings['user_name']   !== undefined &&
           strings['user_email']  !== undefined && 
           strings['logout_link'] !== undefined ){
-        html.push("<div><h3>Welcome Back!</h3>");
+        html.push("<div><p><b>Welcome Back!</b></p>");
         html.push("<p>You are logged in as:<br/>"+ strings['user_name'] + "<br/><i>(" + strings['user_email'] + ")</i></p>");
         html.push("<p><a class='button' href='#' onclick=\"" + strings['logout_link'] + "\">Logout</a></p></div>");
       
@@ -294,7 +294,7 @@ Eventbrite.prototype = {
         }
         html.push("<p><a class='button' href='" + strings['oauth_link']+ "'><img src='http://evbdn.eventbrite.com/s3-s3/static/images/developer/oauth2/oauth-connect-btn.png' alt='Connect to Eventbrite'/></a></p></div>");
       }else{
-        html.push("<div><h2>Eventbrite widgetHTML template example fail :(</h2></div>");
+        html.push("<div><b>Eventbrite widgetHTML template example fail :(</b></div>");
       }  
       html.push("</div>");
       return html.join("\n");
