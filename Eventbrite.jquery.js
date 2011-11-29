@@ -140,28 +140,26 @@ Eventbrite.prototype = {
           options['access_token'] = Eventbrite.prototype.data.getAccessToken();
         }
       }
-      if(options['access_token'] !== undefined){
-        try{
-          // Example using an access_token to initialize the API client:
-          Eventbrite({'access_token': options['access_token']}, function(eb){
-            var resp = eb.user_get(function(resp){
-              if( resp !== undefined && resp['user'] !== undefined){
-                response['user_email'] = resp['user']['email'];
-                response['user_name'] = resp['user']['first_name'] + ' ' + resp['user']['last_name'];          
-              }
-              return cb(response);
-            });
+      try{
+        // Example using an access_token to initialize the API client:
+        Eventbrite({'access_token': options['access_token']}, function(eb){
+          var resp = eb.user_get(function(resp){
+            if( resp !== undefined && resp['user'] !== undefined){
+              response['user_email'] = resp['user']['email'];
+              response['user_name'] = resp['user']['first_name'] + ' ' + resp['user']['last_name'];          
+            }
+            return cb(response);
           });
-        }catch(error){
-          // This token may no longer be valid
-          response['login_error'] = error;
-          if( typeof options['delete_token'] === 'function' ){
-            options.delete_token( options['access_token'] );
-          }else if( options['delete_token'] !== 'disabled' ){
-            Eventbrite.prototype.data.deleteAccessToken( options['access_token'] );
-          }
-          return cb(response);
+        });
+      }catch(error){
+        // This token may no longer be valid
+        response['login_error'] = error;
+        if( typeof options['delete_token'] === 'function' ){
+          options.delete_token( options['access_token'] );
+        }else if( options['delete_token'] !== 'disabled' ){
+          Eventbrite.prototype.data.deleteAccessToken( options['access_token'] );
         }
+        return cb(response);
       }
     },
     'logoutLink': function( ) {
