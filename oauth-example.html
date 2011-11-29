@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="shortcut icon" href="http://evbdn.eventbrite.com/s3-production/35362ce/django/images/icons/favicon.ico" /> 
+  <link rel='stylesheet' href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.6.1.js"></script> 
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="Eventbrite.jquery.js"></script>
+  <title>Eventbrite.jquery.js Test Examples</title>
+</head>
+<body>
+  <h1>Eventbrite.jquery.js Test Examples</h1>
+  
+  <p id='target'>&nbsp;</p>
+  
+  <a href="http://developer.eventbrite.com/news/branding/"><img src="http://evbdn.eventbrite.com/s3-s3/static/images/django/logos/eb_powered.png"/></a>
+
+</body>
+<script type="text/javascript">
+  // Eventbrite OAuth Client interaction example
+  //  For this example to work on YOUR host:
+  //  1. You will need to update your API Key's redirect_uri, pointing it to the public url where your Eventbrite Login Widget is available.
+  //  2. You will also need to set YOUR_API_KEY on the following line ( more info here: https://www.eventbrite.com/api/key )
+  Eventbrite.prototype.widget.login({'app_key': 'YOUR_API_KEY'}, function(widget_html){
+    $('#target').html(widget_html);
+  });
+</script>
+
+<style type="text/css">
+.eb_event_list_location{
+  position: absolute;
+  left: 230px;
+}
+</style>
