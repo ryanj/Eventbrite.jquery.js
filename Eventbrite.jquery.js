@@ -292,7 +292,8 @@ Eventbrite.prototype = {
         if(strings['login_error'] !== undefined){
           html.push("<p class='error'>" + strings['login_error'] + "</p>");
         }
-        html.push("<p><a class='button' href='" + strings['oauth_link']+ "'><img src='http://evbdn.eventbrite.com/s3-s3/static/images/developer/oauth2/oauth-connect-btn.png' alt='Connect to Eventbrite'/></a></p></div>");
+        html.push("<style type='text/css'>.eb_login_btn{width:162px;height:24px;display:block;text-indent: -99999px;background: url('http://evbdn.eventbrite.com/s3-s3/static/images/developer/oauth2/oauth-connect-btn.png') bottom;}\n.eb_login_btn:hover{background: url('http://evbdn.eventbrite.com/s3-s3/static/images/developer/oauth2/oauth-connect-btn-light.png') bottom;}</style>");
+        html.push("<p><a class='eb_login_btn' href='" + strings['oauth_link']+ "'>Connect to Eventbrite</a></p></div>");
       }else{
         html.push("<div><b>Eventbrite widgetHTML template example fail :(</b></div>");
       }  
