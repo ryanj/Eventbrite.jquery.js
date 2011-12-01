@@ -267,9 +267,9 @@ Eventbrite.prototype = {
           
         // view related work:
         //  render your "template"
-        if( typeof options['render_login_box'] == 'function' ){
-          return cb(options.render_login_box( login_params ));
-        }else if(options['render_login_box'] == 'disabled' ){
+        if( typeof options['renderer'] == 'function' ){
+          return cb(options.renderer( login_params ));
+        }else if(options['renderer'] == 'disabled' ){
           //return the raw data for use with an external template
           return cb(login_params);
         }else{
@@ -286,8 +286,10 @@ Eventbrite.prototype = {
           strings['logout_link'] !== undefined ){
         html.push("<div><p><b>Welcome Back!</b></p>");
         html.push("<p>You are logged in as:<br/>"+ strings['user_name'] + "<br/><i>(" + strings['user_email'] + ")</i></p>");
-        html.push("<p><a class='button' href='#' onclick=\"" + strings['logout_link'] + "\">Logout</a></p></div>");
-      
+        if(strings['logout_link'] !== 'disabled'){
+        html.push("<p><a class='button' href='#' onclick=\"" + strings['logout_link'] + "\">Logout</a></p>");
+        }
+        html.push("</div>");
       }else if( strings['oauth_link'] !== undefined ){
         if(strings['login_error'] !== undefined){
           html.push("<p class='error'>" + strings['login_error'] + "</p>");
