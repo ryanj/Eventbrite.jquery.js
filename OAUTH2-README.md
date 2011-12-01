@@ -1,15 +1,13 @@
 # Javascript Eventbrite API Client - OAuth2.0 examples  
 ---------------------------------------------------------
 ## Requirements: ##
-### API key ###
-Eventbrite API keys are available here: http://www.eventbrite.com/api/key/
-### Configure your API key's redirect_uri ###
-You must set your API_key's "redirect_uri" on http://www.eventbrite.com/api/key/, pointing it to the URL on your site where you expect a user to complete their OAuth2 authorization.  Or, point it to any URL on your site where our login widget is available.
+* <b>Configure your API key's redirect_uri</b>
+You will need an API_key configured with an appropriate "redirect_uri".  API Keys and settings are available at http://www.eventbrite.com/api/key/.  Set your key's redirect_uri to point to the URL on your site where you expect a user to complete their OAuth2 authorization workflow (or, any public URL on your site where our login widget is available).
 
 ## Simple implementation example: ##
 Get OAuth2.0 done in two easy steps!  Check below for a more advanced implementation example that shows how to integrate with your existing storage and templating systems.
 
-### 1. Download and install Eventbrite's Javascript / jQuery API client ###
+### 1. Download and Install Eventbrite's Javascript (jQuery) API client ###
 Download Eventbrite's latest Javascript API client and add it to your app's source code: 
 https://raw.github.com/ryanjarvinen/Eventbrite.jquery.js/master/Eventbrite.jquery.js
 
@@ -40,7 +38,7 @@ A live demo example is also available: http://eventbrite.github.com/oauth2-examp
 ## Advanced implementation example: ##
 Interested in integrating with your application's existing authentication, storage, or templating systems?  This example goes into additional detail, demonstrating how to set that up.
 
-### 1. Download and install Eventbrite's Javascript / jQuery API client ###
+### 1. Download and install Eventbrite's Javascript (jQuery) API client ###
 Download Eventbrite's latest Javascript API client and add it to your app's source code: 
 https://raw.github.com/ryanjarvinen/Eventbrite.jquery.js/master/Eventbrite.jquery.js
 
@@ -48,7 +46,7 @@ https://raw.github.com/ryanjarvinen/Eventbrite.jquery.js/master/Eventbrite.jquer
 
 The above example links directly to the latest version available on GitHub.  To ensure your site's reliability, we recommend that you download a specific release of this client, and bundle it with your site's source code.  Linking to your own hosted copy of this file should prevent any new API client changes or GitHub.com outages from unexpectedly interrupting the services offered on your site.
 
-### 2. Define data-management callbacks (optional) ###
+### 2. Define your own data-management callbacks (optional) ###
 By default, the login widget will attempt to use localStorage to save the given user's access_token in the client browser.  Please be careful to keep each user's access_token stored securely, ensuring that it is not visible to other users of your site.
 If you would like to replace the default storage solution, you will need to define a few optional data-management callbacks for the widget to use.  Here is an outline of how that might work:
 
@@ -56,21 +54,21 @@ Define a callback for looking up the current user's `access_token`:
 
     var get_access_token = function(){
         return localStorage['eb_access_token'];
-    }
+    };
 
 Define a callback for saving a user's `access_token`s for later:
 
     var save_access_token = function( access_token ){
         localStorage['eb_access_token'] = access_token;
-    }
+    };
 
 Define a callback for removing the current user's `access_token` when needed:
 
     var delete_access_token = function( access_token ){
         localStorage['eb_access_token'] = undefined;
-    }
+    };
 
-Now that these callbacks are defined, we can supply them as optional arguments in step 5.
+Now that these callbacks are defined, you will be able to supply them as optional arguments in step 5.
 
 ### 3. Supply a custom widget template, or use your existing templating solution (optional).
 This widget includes an example HTML template that will be used by default.  See the `loginHTML` function for more information on how to build your own templating callback function.  This callback can then be supplied as an optional `renderer` parameter in step 5.
@@ -83,18 +81,18 @@ The login widget's default behaviour will attempt to delete a user's access_toke
     var custom_logout = function( ){
         // implementation-specific logout support:
         document.location = '/bye';
-    }
+    };
 
 ### 5. Generate the Eventbrite Login Widget ###
 Add your authentication tokens and other optional parameters to make this example work:
 
-    Eventbrite.prototype.widget.login({'options': {'app_key': 'YOUR_API_KEY'           // required
-                                                  ,'get_token': get_access_token       // optional, get data
-                                                  ,'save_token': save_access_token     // optional, save data
-                                                  ,'delete_token': delete_access_token // optional, delete data
-                                                  ,'renderer': 'disabled'              // optional, supply a callback to create customized HTML, or set to 'disabled' for a "strings only" option.
-                                                  ,'logout_link': 'custom_logout()'    // optional, this gets added to the 'onclick' event on the default 'logout' link
-                                       }, function (strings){                   // required, a callback for displaying the widget code
+    Eventbrite.prototype.widget.login({'app_key': 'YOUR_API_KEY'           // required
+                                      ,'get_token': get_access_token       // optional
+                                      ,'save_token': save_access_token     // optional
+                                      ,'delete_token': delete_access_token // optional
+                                      ,'renderer': 'disabled'              // optional
+                                      ,'logout_link': 'custom_logout();'   // optional
+                                      }, function (strings){               // required
         // This widget has been optionally configured with 'renderer' = 'disabled'
         // If you commonly use mustache templates, then you might end up with a callback that look like this:
         // define your own template:
@@ -110,7 +108,7 @@ Add your authentication tokens and other optional parameters to make this exampl
         // place the resulting HTML somewhere on your page
         //  This example attempts to place the content in an element with id="somewhere"
         $('#somewhere').html( custom_widget_html );
-    }});
+    });
 
 For more detail on our available OAuth2.0 integration functions - see the docs below, or [reach out to the Eventbrite team with questions](http://developer.eventbrite.com/contact-us/)
 
