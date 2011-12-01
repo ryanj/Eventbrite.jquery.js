@@ -2,7 +2,6 @@
 ---------------------------------------------------------
 ## Requirements: ##
 * <b>Configure your API key's redirect_uri</b> - 
-
 Eventbrite API keys, and key settings are available at http://www.eventbrite.com/api/key/.  Set your key's "redirect_uri" to point to the URL on your site where you expect a user to complete their OAuth2 authorization workflow (or, any public URL on your site where our login widget is available).
 
 ## Simple implementation example: ##
