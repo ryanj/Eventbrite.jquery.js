@@ -19,8 +19,12 @@
   //  For this example to work on YOUR host:
   //  1. You will need to update your API Key's redirect_uri, pointing it to the public url where your Eventbrite Login Widget is available.
   //  2. You will also need to set YOUR_API_KEY below ( more info here: https://www.eventbrite.com/api/key )
+  //  3. Eventbrite recommends that you keep your users' access_tokens secret. Do not expose them to other users.
   $('document').ready(function(){
+    // for more information about how to use this widget see https://github.com/ryanjarvinen/Eventbrite.jquery.js/blob/master/OAUTH2-README.md
     Eventbrite.prototype.widget.login({'app_key': 'YOUR_API_KEY'}, function(widget_html){
+      // Place the resulting Eventbrite login widget code somewhere on your page.
+      // This example places the content into an element marked with class="eb_login_box"
       $('#target').html(widget_html);
     });
   });
