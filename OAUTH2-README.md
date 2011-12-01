@@ -1,4 +1,4 @@
-# PHP Eventbrite API Client Library - OAuth2.0 examples  
+# Javascript Eventbrite API Client - OAuth2.0 examples  
 ---------------------------------------------------------
 ## Requirements: ##
 ### API key ###
