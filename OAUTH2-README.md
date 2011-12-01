@@ -1,8 +1,9 @@
 # Javascript Eventbrite API Client - OAuth2.0 examples  
 ---------------------------------------------------------
 ## Requirements: ##
-* <b>Configure your API key's redirect_uri</b>
-You will need an API_key configured with an appropriate "redirect_uri".  API Keys and settings are available at http://www.eventbrite.com/api/key/.  Set your key's redirect_uri to point to the URL on your site where you expect a user to complete their OAuth2 authorization workflow (or, any public URL on your site where our login widget is available).
+* <b>Configure your API key's redirect_uri</b> - 
+
+Eventbrite API keys, and key settings are available at http://www.eventbrite.com/api/key/.  Set your key's "redirect_uri" to point to the URL on your site where you expect a user to complete their OAuth2 authorization workflow (or, any public URL on your site where our login widget is available).
 
 ## Simple implementation example: ##
 Get OAuth2.0 done in two easy steps!  Check below for a more advanced implementation example that shows how to integrate with your existing storage and templating systems.
