@@ -174,6 +174,9 @@ Eventbrite.prototype = {
     },
     'oauthLink': function( key ) {
       return 'https://www.eventbrite.com/oauth/authorize?response_type=token&client_id=' + key;
+    },
+    'isLoggedIn': function() {
+      return Eventbrite.prototype.data.getAccessToken !== undefined;
     }
   },
   'data': {
@@ -330,7 +333,6 @@ Eventbrite.prototype = {
       this.request( method, params, callback );
     }   
   }
-
   for ( var i = 0; i < len ; i += 1 ){
     addMethod( Eventbrite.prototype.api_methods[i] );
   }
