@@ -284,20 +284,20 @@ Eventbrite.prototype = {
     'loginHTML': function( strings ) {
       // Replace this example with something that works with your Application's templating engine
       html = ["<div class='eb_login_widget'>"];
+      html.push("<style type='text/css'>.eb_login_btn{width:162px;height:24px;display:block;text-indent: -99999px;background: url('http://evbdn.eventbrite.com/s3-s3/static/images/developer/oauth2/oauth-connect-btns.png') top;}\n.eb_login_btn:hover{background-position: 0px 24px;} .eb_logout{text-align:right;}</style>");
       if( strings['user_name']   !== undefined &&
           strings['user_email']  !== undefined && 
           strings['logout_link'] !== undefined ){
         html.push("<div><p><b>Welcome Back!</b></p>");
         html.push("<p>You are logged in as:<br/>"+ strings['user_name'] + "<br/><i>(" + strings['user_email'] + ")</i></p>");
         if(strings['logout_link'] !== 'disabled'){
-        html.push("<p><a class='button' href='#' onclick=\"" + strings['logout_link'] + "\">Logout</a></p>");
+        html.push("<p class='eb_logout'><a class='button' href='#' onclick=\"" + strings['logout_link'] + "\">Logout</a></p>");
         }
         html.push("</div>");
       }else if( strings['oauth_link'] !== undefined ){
         if(strings['login_error'] !== undefined){
           html.push("<p class='error'>" + strings['login_error'] + "</p>");
         }
-        html.push("<style type='text/css'>.eb_login_btn{width:162px;height:24px;display:block;text-indent: -99999px;background: url('http://evbdn.eventbrite.com/s3-s3/static/images/developer/oauth2/oauth-connect-btns.png') top;}\n.eb_login_btn:hover{background-position: 0px 24px;}</style>");
         html.push("<p><a class='eb_login_btn' href='" + strings['oauth_link']+ "'>Connect to Eventbrite</a></p></div>");
       }else{
         html.push("<div><b>Eventbrite widgetHTML template example fail :(</b></div>");
