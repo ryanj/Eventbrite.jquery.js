@@ -10,7 +10,7 @@ var Eventbrite = function () {
   this.auth_tokens = {};
   if(typeof args[0] === 'object'){
     this.auth_tokens = args[0];
-  }else if(typeof args[0] === 'function'){
+  }else if(typeof args[0] === 'function' || args[0] == undefined ){
     this.auth_tokens.access_token = Eventbrite.prototype.data.getAccessToken();
   }else{
     this.auth_tokens.app_key = args[0];
