@@ -64,7 +64,11 @@ Eventbrite.prototype = {
         }
       },
       success: function (resp) {
-        cb(resp.contents);
+        if(resp['contents'] !== undefined){
+          cb(resp.contents);
+        }else{
+          cb(resp);
+        }
       },
       failure: function (err) {
         console.log("Error connecting to Eventbrite API");
