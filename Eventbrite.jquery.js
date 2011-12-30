@@ -199,8 +199,8 @@ Eventbrite.prototype = {
   'widget': {
     'login': function( options, cb ){
       // automatically grab the access_token from the request fragment?
-      if( document.location.hash.indexOf("token_type=Bearer") !== -1 &&  
-          document.location.hash.indexOf("access_token=") !== -1 &&
+      if( window.location.hash.indexOf("token_type=Bearer") !== -1 &&  
+          window.location.hash.indexOf("access_token=") !== -1 &&
           options['access_token'] == undefined ){  
 
         // if we have a new access_token: add it to "options", and save it
