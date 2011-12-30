@@ -221,7 +221,7 @@ Eventbrite.prototype = {
             Eventbrite.prototype.data.saveAccessToken( access_token );
           }
           options['access_token'] = access_token;
-          document.location.hash = '#';
+          window.location.hash = '#';
         }
       }
 
