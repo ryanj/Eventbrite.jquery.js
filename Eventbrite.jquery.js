@@ -304,7 +304,7 @@ Eventbrite.prototype = {
         if(strings['login_error'] !== undefined){
           html.push("<p class='error'>" + strings['login_error'] + "</p>");
         }
-        html.push("<p><a class='eb_login_btn' href='" + strings['oauth_link']+ "'>Connect to Eventbrite</a></p></div>");
+        html.push("<p><a class='eb_login_btn' target='_top' href='" + strings['oauth_link']+ "'>Connect to Eventbrite</a></p></div>");
       }else{
         html.push("<div><b>Eventbrite widgetHTML template example fail :(</b></div>");
       }  
