@@ -182,7 +182,9 @@ Eventbrite.prototype = {
       return 'https://www.eventbrite.com/oauth/authorize?response_type=token&client_id=' + key;
     },
     'isLoggedIn': function() {
-      return Eventbrite.prototype.data.getAccessToken !== undefined;
+      var token = Eventbrite.prototype.data.getAccessToken();
+      var isLogged = ( token !== undefined && token !== 'undefined' );
+      return isLogged;
     }
   },
   'data': {
