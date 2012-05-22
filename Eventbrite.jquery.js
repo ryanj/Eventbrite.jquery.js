@@ -10,7 +10,7 @@ var Eventbrite = function () {
   this.auth_tokens = {};
   if(typeof args[0] === 'object'){
     this.auth_tokens = args[0];
-  }else if(typeof args[0] === 'function' || args[0] == undefined ){
+  }else if(typeof args[0] === 'function' || args[0] === undefined ){
     this.auth_tokens.access_token = Eventbrite.prototype.data.getAccessToken();
   }else{
     this.auth_tokens.app_key = args[0];
@@ -31,22 +31,22 @@ var Eventbrite = function () {
   
   // call callback
   callback(this);
-}
+};
 
 Eventbrite.prototype = {
   'api_host': "https://developer.eventbrite.com/json/",
   'api_methods': ['discount_new', 'discount_update', 'event_copy', 'event_get', 'event_list_attendees', 'event_list_discounts', 'event_new', 'event_search', 'event_update', 'organizer_list_events', 'organizer_new', 'organizer_update', 'organizer_get', 'payment_update', 'ticket_new', 'ticket_update', 'user_get', 'user_list_events', 'user_list_organizers', 'user_list_tickets', 'user_list_venues', 'user_new', 'user_update', 'venue_new', 'venue_get', 'venue_update'],
   'request': function ( method, params, cb ) {
     var auth_headers = {};
-    if(typeof params == 'function'){ cb = params; params = {};}
-    else if( params == undefined){ var params = {}; }
-    if( this.auth_tokens['access_token'] === undefined ){
+    if(typeof params === 'function'){ cb = params; params = {};}
+    else if( params === undefined){ params = {}; }
+    if( this.auth_tokens.access_token === undefined ){
       if(this.auth_tokens.app_key){ params.app_key = this.auth_tokens.app_key;}
       if(this.auth_tokens.user_key){ params.user_key = this.auth_tokens.user_key;}
       if(this.auth_tokens.user){ params.user = this.auth_tokens.user;}
       if(this.auth_tokens.password){ params.password = this.auth_tokens.password;}
     }else{
-      auth_headers = {'Authorization': 'Bearer ' + this.auth_tokens['access_token']};
+      auth_headers = {'Authorization': 'Bearer ' + this.auth_tokens.access_token};
       params.access_token = this.auth_tokens.access_token;
     }
     
@@ -64,7 +64,7 @@ Eventbrite.prototype = {
         }
       },
       success: function (resp) {
-        if(resp['contents'] !== undefined){
+        if(resp.contents !== undefined){
           cb(resp.contents);
         }else{
           cb(resp);
@@ -80,11 +80,12 @@ Eventbrite.prototype = {
   'utils': {
     'eventList': function( evnts, callback, options){
       var html = ['<div class="eb_event_list">'];
-      if( evnts['events'] !== undefined ){
-        var len = evnts['events'].length;
+      if( evnts.events !== undefined ){
+        var len = evnts.events.length;
         for( var i = 0; i < len; i++ ){
-          if(evnts['events'][i]['event'] !== undefined ){
-            html.push( callback( evnts['events'][i]['event'], options ));
+          if(evnts.events[i].event !== undefined ){
+            html.push( callback( evnts.events[i].event, options ));
+
           }
         }
       }else{
@@ -95,18 +96,18 @@ Eventbrite.prototype = {
     },
     'eventListRow': function( evnt ){
       var not_iso_8601 = /\d\d-\d\d-\d\d \d\d:\d\d:\d\d/;
-      var date_string = not_iso_8601.test( evnt['start_date'] ) ? evnt['start_date'].replace(' ', 'T') : evnt['start_date'];
+      var date_string = not_iso_8601.test( evnt.start_date ) ? evnt.start_date.replace(' ', 'T') : evnt.start_date;
       var start_date = new Date( Date.parse( date_string ));
       var venue_name = 'Online'; //default location name
       var time_string = Eventbrite.prototype.utils.formatTime( start_date );
-      var date_string = start_date.toDateString();
       var html = '';
-      if( evnt['venue'] !== undefined && evnt['venue']['name'] !== undefined && evnt['venue']['name'] !== ''){ 
-          venue_name = evnt['venue']['name'];
+      date_string = start_date.toDateString();
+      if( evnt.venue !== undefined && evnt.venue.name !== undefined && evnt.venue.name !== ''){ 
+          venue_name = evnt.venue.name;
       }
 
-      html = "<div class='eb_event_list_item' id='evnt_div_" + evnt['id'] + "'>" + 
-             "<span class='eb_event_list_title'><a href='" + evnt['url'] + "'>" + evnt['title'] + "</a></span>" +
+      html = "<div class='eb_event_list_item' id='evnt_div_" + evnt.id + "'>" + 
+             "<span class='eb_event_list_title'><a href='" + evnt.url + "'>" + evnt.title + "</a></span>" +
              "<span class='eb_event_list_date'>" + date_string + "</span><span class='eb_event_list_time'>" + time_string + "</span>" +
              "<span class='eb_event_list_location'>" + venue_name + "</span></div>";
       return html;
@@ -119,7 +120,7 @@ Eventbrite.prototype = {
       if( minutes < 10 ){
         minutes = '0' + minutes;
       }
-      if( hours == 0 ){
+      if( hours === 0 ){
         hours = 12;
       } else if ( hours >= 12 ){
         ampm = 'pm';
@@ -131,39 +132,39 @@ Eventbrite.prototype = {
     },
     'login': function( options, cb ) {
       var response = {};
-      if( options['error_message'] !== undefined ){
-        if( options['error_message'] == 'access_denied' ){
-          response['login_error'] = "Account access denied.";
-        }else if( options['error_message'] !== 'disabled' ){
-          response['login_error'] = options['error_message'];
+      if( options.error_message !== undefined ){
+        if( options.error_message === 'access_denied' ){
+          response.login_error = "Account access denied.";
+        }else if( options.error_message !== 'disabled' ){
+          response.login_error = options.error_message;
         }
       }
       // auto lookup of access_token from data-store
-      if( options['access_token'] == undefined ){
-        if( typeof options['get_token'] == 'function' ){
-          options['access_token'] = options.get_token();
-        }else if( options['get_token'] !== 'disabled' ){
-          options['access_token'] = Eventbrite.prototype.data.getAccessToken();
+      if( options.access_token === undefined ){
+        if( typeof options.get_token == 'function' ){
+          options.access_token = options.get_token();
+        }else if( options.get_token !== 'disabled' ){
+          options.access_token = Eventbrite.prototype.data.getAccessToken();
         }
       }
       try{
         // Example using an access_token to initialize the API client:
-        Eventbrite({'access_token': options['access_token']}, function(eb){
+        Eventbrite({'access_token': options.access_token}, function(eb){
           var resp = eb.user_get(function(resp){
-            if( resp !== undefined && resp['user'] !== undefined){
-              response['user_email'] = resp['user']['email'];
-              response['user_name'] = resp['user']['first_name'] + ' ' + resp['user']['last_name'];          
+            if( resp !== undefined && resp.user !== undefined){
+              response.user_email = resp.user.email;
+              response.user_name = resp.user.first_name + ' ' + resp.user.last_name;          
             }
             return cb(response);
           });
         });
       }catch(error){
         // This token may no longer be valid
-        response['login_error'] = error;
-        if( typeof options['delete_token'] === 'function' ){
-          options.delete_token( options['access_token'] );
-        }else if( options['delete_token'] !== 'disabled' ){
-          Eventbrite.prototype.data.deleteAccessToken( options['access_token'] );
+        response.login_error = error;
+        if( typeof options.delete_token === 'function' ){
+          options.delete_token( options.access_token );
+        }else if( options.delete_token !== 'disabled' ){
+          Eventbrite.prototype.data.deleteAccessToken( options.access_token );
         }
         return cb(response);
       }
@@ -189,13 +190,13 @@ Eventbrite.prototype = {
   },
   'data': {
     'getAccessToken': function ( ){
-      return localStorage['eb_access_token'];
+      return localStorage.eb_access_token;
     },
     'saveAccessToken': function ( token ){
-      localStorage['eb_access_token'] = token;
+      localStorage.eb_access_token = token;
     },
     'deleteAccessToken': function ( token ){
-      localStorage['eb_access_token'] = undefined;
+      localStorage.eb_access_token = undefined;
     }
   },
   'widget': {
@@ -203,7 +204,7 @@ Eventbrite.prototype = {
       // automatically grab the access_token from the request fragment?
       if( window.location.hash.indexOf("token_type=Bearer") !== -1 &&  
           window.location.hash.indexOf("access_token=") !== -1 &&
-          options['access_token'] == undefined ){  
+          options.access_token === undefined ){  
 
         // if we have a new access_token: add it to "options", and save it
         if( window.location.hash.slice( window.location.hash.indexOf("access_token=") + 13 ).indexOf("&") !== -1){
@@ -216,37 +217,37 @@ Eventbrite.prototype = {
           //the rest of the string contains the access_token value
           access_token = window.location.hash.slice( window.location.hash.indexOf("access_token=") + 13 );
         }
-        if( access_token !== -1 && access_token !== '' && options['save_token'] !== 'disabled'){
-          if(typeof options['save_token'] == 'function'){
+        if( access_token !== -1 && access_token !== '' && options.save_token !== 'disabled'){
+          if(typeof options.save_token == 'function'){
             options.save_token( access_token );
           }else{
             Eventbrite.prototype.data.saveAccessToken( access_token );
           }
-          options['access_token'] = access_token;
+          options.access_token = access_token;
           window.location.hash = '#';
         }
       }
 
       // automatically grab the access_token from storage?
-      if( options['access_token'] == undefined && options['get_token'] !== 'disabled'){
-        if(typeof options['get_token'] == 'function'){
-          options['access_token'] = options.get_token();
+      if( options.access_token === undefined && options.get_token !== 'disabled'){
+        if(typeof options.get_token == 'function'){
+          options.access_token = options.get_token();
         }else{
-          options['access_token'] = Eventbrite.prototype.data.getAccessToken();
+          options.access_token = Eventbrite.prototype.data.getAccessToken();
         }
       }
         
       // automatically grab errors from the querystring?
-      if( options['error_message'] !== undefined && options['error_message'] == "disabled"){
-        delete(options['error_message']);
-      }else if( options['error_message'] !== 'disabled' && window.location.search.indexOf("error=") !== -1 ){
+      if( options.error_message !== undefined && options.error_message == "disabled"){
+        delete(options.error_message);
+      }else if( options.error_message !== 'disabled' && window.location.search.indexOf("error=") !== -1 ){
         if( window.location.search.slice( window.location.search.indexOf("error=") + 6 ).indexOf("&") !== -1){
-          options['error_message'] = window.location.search.slice( 
+          options.error_message = window.location.search.slice( 
             window.location.search.indexOf("error=") + 6,
             window.location.search.indexOf("error=") + 6 + window.location.search.slice( window.location.search.indexOf("error=") + 6 ).indexOf("&") 
           );
         }else{
-          options['error_message'] = window.location.search.slice( window.location.search.indexOf("error=") + 6 );
+          options.error_message = window.location.search.slice( window.location.search.indexOf("error=") + 6 );
         }
       }
 
@@ -256,31 +257,31 @@ Eventbrite.prototype = {
           
         //  package up the data for our view / template:
         var login_params = {};
-        if(options['logout_link'] !== 'disabled'){
-          login_params['logout_link'] = options['logout_link'];
+        if(options.logout_link !== 'disabled'){
+          login_params.logout_link = options.logout_link;
         }
-        login_params['oauth_link'] = options['oauth_link'];
-        if( login_params['oauth_link'] == undefined ){
-          login_params['oauth_link'] = Eventbrite.prototype.utils.oauthLink(options['app_key']);
+        login_params.oauth_link = options.oauth_link;
+        if( login_params.oauth_link === undefined ){
+          login_params.oauth_link = Eventbrite.prototype.utils.oauthLink(options.app_key);
         }
-        if( login_params['logout_link'] == undefined ){
-          login_params['logout_link'] = "Eventbrite.prototype.utils.logout('" + options['app_key'] + "');";
+        if( login_params.logout_link === undefined ){
+          login_params.logout_link = "Eventbrite.prototype.utils.logout('" + options.app_key + "');";
         }
         if( response !== undefined && typeof response == 'object'){
-          if( response['user_email'] !== undefined ){
-            login_params['user_name']  = response['user_name'],
-            login_params['user_email'] = response['user_email'];
+          if( response.user_email !== undefined ){
+            login_params.user_name = response.user_name,
+            login_params.user_email = response.user_email;
           }
-          if( response['login_error'] !== undefined ){
-            login_params['login_error'] = response['login_error'];
+          if( response.login_error !== undefined ){
+            login_params.login_error = response.login_error;
           }
         }
           
         // view related work:
         //  render your "template"
-        if( typeof options['renderer'] == 'function' ){
+        if( typeof options.renderer == 'function' ){
           return cb(options.renderer( login_params ));
-        }else if(options['renderer'] == 'disabled' ){
+        }else if(options.renderer == 'disabled' ){
           //return the raw data for use with an external template
           return cb(login_params);
         }else{
@@ -293,20 +294,20 @@ Eventbrite.prototype = {
       // Replace this example with something that works with your Application's templating engine
       html = ["<div class='eb_login_widget'>"];
       html.push("<style type='text/css'>.eb_login_btn{width:162px;height:24px;display:block;text-indent: -99999px;background: url('http://evbdn.eventbrite.com/s3-s3/static/images/developer/oauth2/oauth-connect-btns.png') top;}\n.eb_login_btn:hover{background-position: 0px 24px;} .eb_logout{text-align:right;}</style>");
-      if( strings['user_name']   !== undefined &&
-          strings['user_email']  !== undefined && 
-          strings['logout_link'] !== undefined ){
+      if( strings.user_name   !== undefined &&
+          strings.user_email  !== undefined && 
+          strings.logout_link !== undefined ){
         html.push("<div><p><b>Welcome Back!</b></p>");
-        html.push("<p>You are logged in as:<br/>"+ strings['user_name'] + "<br/><i>(" + strings['user_email'] + ")</i></p>");
-        if(strings['logout_link'] !== 'disabled'){
-        html.push("<p class='eb_logout'><a class='button' href='#' onclick=\"" + strings['logout_link'] + "\">Logout</a></p>");
+        html.push("<p>You are logged in as:<br/>"+ strings.user_name + "<br/><i>(" + strings.user_email + ")</i></p>");
+        if(strings.logout_link !== 'disabled'){
+        html.push("<p class='eb_logout'><a class='button' href='#' onclick=\"" + strings.logout_link + "\">Logout</a></p>");
         }
         html.push("</div>");
-      }else if( strings['oauth_link'] !== undefined ){
-        if(strings['login_error'] !== undefined){
-          html.push("<p class='error'>" + strings['login_error'] + "</p>");
+      }else if( strings.oauth_link !== undefined ){
+        if(strings.login_error !== undefined){
+          html.push("<p class='error'>" + strings.login_error + "</p>");
         }
-        html.push("<p><a class='eb_login_btn' target='_top' href='" + strings['oauth_link']+ "'>Connect to Eventbrite</a></p>");
+        html.push("<p><a class='eb_login_btn' target='_top' href='" + strings.oauth_link + "'>Connect to Eventbrite</a></p>");
       }else{
         html.push("<div><b>Eventbrite widgetHTML template example fail :(</b></div>");
       }  
@@ -339,7 +340,7 @@ Eventbrite.prototype = {
   function addMethod ( method ) { 
     Eventbrite.prototype[method] = function( params, callback) {
       this.request( method, params, callback );
-    }   
+    };   
   }
   for ( var i = 0; i < len ; i += 1 ){
     addMethod( Eventbrite.prototype.api_methods[i] );
