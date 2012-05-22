@@ -3,7 +3,7 @@
  */
 
 //Constructor
-var window.Eventbrite = function () {
+var Eventbrite = function () {
   "use strict";
   var auth_tokens = {},
     args = Array.prototype.slice.call(arguments),
