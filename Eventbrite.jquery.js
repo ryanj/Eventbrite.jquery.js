@@ -27,7 +27,7 @@ var Eventbrite = function () {
 
   // make sure the function is called as a constructor
   if (!(this instanceof Eventbrite)) {
-    return new Eventbrite(auth_tokens, callback);
+    return new Eventbrite(this.auth_tokens, callback);
   }
   
   // call callback
