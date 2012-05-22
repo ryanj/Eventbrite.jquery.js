@@ -3,18 +3,24 @@
  */
 
 //Constructor
-var Eventbrite = function () {
+var window.Eventbrite = function () {
   "use strict";
-  var args = Array.prototype.slice.call(arguments),
+  var auth_tokens = {},
+    args = Array.prototype.slice.call(arguments),
     // the last argument is the callback
     callback = args.pop();
-  this.auth_tokens = {};
+  
+  // make sure the function is called as a constructor
+  if (!(this instanceof Eventbrite)) {
+    return new Eventbrite(auth_tokens, callback);
+  }
+  
   if(typeof args[0] === 'object'){
-    this.auth_tokens = args[0];
+    auth_tokens = args[0];
   }else if(typeof args[0] === 'function' || args[0] === undefined ){
-    this.auth_tokens.access_token = Eventbrite.prototype.data.getAccessToken();
+    auth_tokens.access_token = Eventbrite.prototype.data.getAccessToken();
   }else{
-    this.auth_tokens.app_key = args[0];
+    auth_tokens.app_key = args[0];
     if(typeof args[1] !== 'function'){
       if(typeof args[2] !== 'function'){
        this.auth_tokens.user = args[1];
@@ -24,12 +30,8 @@ var Eventbrite = function () {
       }
     }
   }
+  this.auth_tokens = auth_tokens;
 
-  // make sure the function is called as a constructor
-  if (!(this instanceof Eventbrite)) {
-    return new Eventbrite(this.auth_tokens, callback);
-  }
-  
   // call callback
   callback(this);
 };
