@@ -4,6 +4,7 @@
 
 //Constructor
 var Eventbrite = function () {
+  "use strict";
   var args = Array.prototype.slice.call(arguments),
     // the last argument is the callback
     callback = args.pop();
