@@ -10,11 +10,6 @@ var Eventbrite = function () {
     // the last argument is the callback
     callback = args.pop();
   
-  // make sure the function is called as a constructor
-  if (!(this instanceof Eventbrite)) {
-    return new Eventbrite(auth_tokens, callback);
-  }
-  
   if(typeof args[0] === 'object'){
     auth_tokens = args[0];
   }else if(typeof args[0] === 'function' || args[0] === undefined ){
@@ -23,12 +18,17 @@ var Eventbrite = function () {
     auth_tokens.app_key = args[0];
     if(typeof args[1] !== 'function'){
       if(typeof args[2] !== 'function'){
-       this.auth_tokens.user = args[1];
-       this.auth_tokens.password = args[1];
+       auth_tokens.user = args[1];
+       auth_tokens.password = args[1];
       }else{
-       this.auth_tokens.user_key = args[1];
+       auth_tokens.user_key = args[1];
       }
     }
+  }
+
+  // make sure the function is called as a constructor
+  if (!(this instanceof Eventbrite)) {
+    return new Eventbrite(auth_tokens, callback);
   }
   this.auth_tokens = auth_tokens;
 
@@ -257,7 +257,6 @@ Eventbrite.prototype = {
       //  Check to see if we have a valid user account
       //  and Proccess any data-related work:
       Eventbrite.prototype.utils.login( options, function(response){
-          
         //  package up the data for our view / template:
         var login_params = {};
         if(options.logout_link !== 'disabled'){
