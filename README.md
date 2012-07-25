@@ -1,6 +1,6 @@
 # An Eventbrite API client library. (requires jQuery)
 --------------------------------------
-written by @ryanjarvinen
+written by [@ryanj](http://github.com/ryanjarvinen/), with [ISO 8601 date support](https://github.com/csnover/js-iso8601/) provided by [Colin Snover](https://github.com/csnover/)
 
 # Usage Examples #
 
