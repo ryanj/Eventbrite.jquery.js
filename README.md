@@ -1,10 +1,10 @@
 # An Eventbrite API client library. (requires jQuery)
 --------------------------------------
 
-####  WARNING: This library uses API endpoints that are being deprecated in April of 2015. Get started with Eventbrite's most recent APIs here: https://developer.eventbrite.com
+####  WARNING: This library uses Eventbrite API endpoints that have been deprecated (as of April 2015). 
+See Eventbrite's developer site for updated info on how to use thier new APIs: https://developer.eventbrite.com
 
-
-written by [@ryanj](http://github.com/ryanjarvinen/), with [ISO 8601 date support](https://github.com/csnover/js-iso8601/) provided by [Colin Snover](https://github.com/csnover/)
+written by [@ryanj](http://github.com/ryanj/), with [ISO 8601 date support](https://github.com/csnover/js-iso8601/) provided by [Colin Snover](https://github.com/csnover/)
 
 # Usage Examples #
 
